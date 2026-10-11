@@ -1,0 +1,2567 @@
+#VRML_SIM R2025a utf8
+# 三足履带爬管机器人仿真世界 —— 用 Webots 打开本文件即可运行
+# 机器人: 三条履带腿像奔驰车标一样 120° 对称撑住钢管内壁, 从管底爬到管顶
+# 场景: Webots 官方山湖背景 + 拼花地板竞技场, 水管立在正中央
+# 注意: 机器人外壳模型在 ../meshes/ 文件夹里, 缺一个都会显示不全, 请勿移动
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+WorldInfo {
+  basicTimeStep 16
+  gravity 0
+  title "zhengti2 track pipe climber"
+}
+Viewpoint {
+  orientation 0 0 1 3.927
+  position 1.75 1.75 1.15
+  exposure 1.0
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 4 4
+}
+Solid {
+  translation 0 0 0.03
+  children [
+    Shape {
+      appearance Appearance { material Material { diffuseColor 0.24 0.26 0.29 specularColor 0.6 0.62 0.66 shininess 0.5 } }
+      geometry Cylinder { radius 0.4035 height 0.06 subdivision 48 }
+    }
+  ]
+  name "pipe_flange"
+}
+Solid {
+  translation 0 0 1.16
+  children [
+    Shape {
+      appearance Appearance { material Material { diffuseColor 0.34 0.36 0.40 specularColor 0.72 0.74 0.78 shininess 0.6 transparency 0.12 } }
+      geometry Cylinder { radius 0.3635 height 2.2 side TRUE top FALSE bottom FALSE subdivision 64 }
+    }
+    Shape {
+      appearance Appearance { material Material { diffuseColor 0.16 0.17 0.19 specularColor 0.35 0.36 0.38 shininess 0.3 transparency 0.30 } }
+      geometry Cylinder { radius 0.3515 height 2.2 side TRUE top FALSE bottom FALSE subdivision 64 }
+    }
+  ]
+  name "pipe"
+}
+DEF ROBOT Robot {
+  translation 0 0 0.15
+  children [
+    Shape {
+      appearance DEF GRAY Appearance { material Material { diffuseColor 0.792157 0.819608 0.933333 } }
+      geometry Mesh { url [ "../meshes/base_link.STL" ] }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 0.866024792 -0.50000106 0
+          anchor -0.017003 0.055845 0.305
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint5_1"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint5_1_sensor" }
+      ]
+      endPoint Solid {
+          translation -0.017003 0.055845 0.305
+          rotation -0.291615461 0.0781383185 -0.953338778 0.547991395
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link5_1.STL" ] }
+          }
+          ]
+          name "Link5_1"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.0418799028
+            centerOfMass [ 0.042645 0.0669368341 -1.11022302e-16 ]
+            inertiaMatrix [ 5.2938455e-05 5.23577798e-06 5.74602812e-05 3.24693866e-21 -2.30093767e-22 1.43466205e-20 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 3.49148134e-15 -1 0
+          anchor -0.039959323 0.0426425712 0.305
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint5_2"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint5_2_sensor" }
+      ]
+      endPoint Solid {
+          translation -0.039959323 0.0426425712 0.305
+          rotation 0.362987065 0.362987065 0.858184585 1.72313968
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link5_2.STL" ] }
+          }
+          ]
+          name "Link5_2"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.0418799028
+            centerOfMass [ -0.042645 -2.77555756e-17 -0.0669368341 ]
+            inertiaMatrix [ 5.2938455e-05 5.74602812e-05 5.23577798e-06 3.88979097e-21 4.99199608e-21 -2.11758237e-21 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis -0.866028465 -0.499994698 0
+          anchor 0.057424 -0.014166 0.305
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint5_3"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint5_3_sensor" }
+      ]
+      endPoint Solid {
+          translation 0.057424 -0.014166 0.305
+          rotation -0.022376601 0.0835116342 -0.996255537 2.61987268
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link5_3.STL" ] }
+          }
+          ]
+          name "Link5_3"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.0418799028
+            centerOfMass [ 0.042645 0.0669368341 0 ]
+            inertiaMatrix [ 5.2938455e-05 5.23577798e-06 5.74602812e-05 4.4111897e-21 -3.5673846e-21 -5.1880768e-21 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 0.866028465 -0.499994698 0
+          anchor 0.03 0.051962 0.01
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint1_1"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint1_1_sensor" }
+      ]
+      endPoint Solid {
+          translation 0.03 0.051962 0.01
+          rotation 0.0408917705 0.152612034 0.987439836 2.62428528
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link1_1.STL" ] }
+          }
+          SliderJoint {
+            jointParameters JointParameters {
+                axis 0 0 1
+                dampingConstant 0.5
+            }
+            device [
+                LinearMotor {
+                  name "joint_driver_2_1"
+                  maxVelocity 0.5
+                  minPosition -0.1
+                  maxPosition 0.1
+                  maxForce 80.0
+                  controlPID 20 4 0
+                }
+                PositionSensor { name "joint_driver_2_1_sensor" }
+            ]
+            endPoint Solid {
+                translation 0 0.00125 0.235749984
+                children [
+                Shape {
+                  appearance USE GRAY
+                  geometry Mesh { url [ "../meshes/Link_driver_2_1.STL" ] }
+                }
+                ]
+                name "Link_driver_2_1"
+                boundingObject Box { size 0.004 0.004 0.004 }
+                physics Physics {
+                  mass 0.0335848387
+                  centerOfMass [ 0.000972401473 0.000255408833 -0.0537287153 ]
+                  inertiaMatrix [ 5.84660051e-05 5.85808497e-05 2.02422417e-06 -7.14806966e-11 1.65960314e-11 -2.53158725e-07 ]
+                }
+            }
+          }
+          ]
+          name "Link1_1"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.142664948
+            centerOfMass [ 0.000832969169 0.027100031 0.0627224529 ]
+            inertiaMatrix [ 0.000110576097 9.47910181e-05 4.40197687e-05 -8.9317348e-07 6.65581169e-07 -8.92926835e-06 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 7.34641021e-06 1 0
+          anchor -0.06 0 0.01
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint1_2"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint1_2_sensor" }
+      ]
+      endPoint Solid {
+          translation -0.06 0 0.01
+          rotation -0.122486769 4.49917925e-07 0.992471239 3.14158536
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link1_2.STL" ] }
+          }
+          SliderJoint {
+            jointParameters JointParameters {
+                axis 0 0 1
+                dampingConstant 0.5
+            }
+            device [
+                LinearMotor {
+                  name "joint_driver_2_2"
+                  maxVelocity 0.5
+                  minPosition -0.1
+                  maxPosition 0.1
+                  maxForce 80.0
+                  controlPID 20 4 0
+                }
+                PositionSensor { name "joint_driver_2_2_sensor" }
+            ]
+            endPoint Solid {
+                translation 0.00125 0 0.182154027
+                children [
+                Shape {
+                  appearance USE GRAY
+                  geometry Mesh { url [ "../meshes/Link_driver_2_2.STL" ] }
+                }
+                ]
+                name "Link_driver_2_2"
+                boundingObject Box { size 0.004 0.004 0.004 }
+                physics Physics {
+                  mass 0.0335848391
+                  centerOfMass [ 0.000309055616 -0.000974709139 -0.0537789761 ]
+                  inertiaMatrix [ 5.85829344e-05 5.84660052e-05 2.02214071e-06 7.14261729e-11 -2.53467437e-07 -1.70721238e-11 ]
+                }
+            }
+          }
+          ]
+          name "Link1_2"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.14266516
+            centerOfMass [ 0.0271001337 -0.00083295944 0.0627224103 ]
+            inertiaMatrix [ 9.47915417e-05 0.00011057737 4.40205366e-05 8.93252761e-07 -8.92990709e-06 -6.65646393e-07 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis -0.866028465 -0.499994698 0
+          anchor 0.030002 -0.05196 0.01
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint1_3"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint1_3_sensor" }
+      ]
+      endPoint Solid {
+          translation 0.030002 -0.05196 0.01
+          rotation -0.0401149925 0.149713023 -0.98791538 2.62404712
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link1_3.STL" ] }
+          }
+          SliderJoint {
+            jointParameters JointParameters {
+                axis 0 0 1
+                dampingConstant 0.5
+            }
+            device [
+                LinearMotor {
+                  name "joint_driver_2_3"
+                  maxVelocity 0.5
+                  minPosition -0.1
+                  maxPosition 0.1
+                  maxForce 80.0
+                  controlPID 20 4 0
+                }
+                PositionSensor { name "joint_driver_2_3_sensor" }
+            ]
+            endPoint Solid {
+                translation 0 0.00125 0.235749984
+                rotation 0 0 1 1.57079633
+                children [
+                Shape {
+                  appearance USE GRAY
+                  geometry Mesh { url [ "../meshes/Link_driver_2_3.STL" ] }
+                }
+                ]
+                name "Link_driver_2_3"
+                boundingObject Box { size 0.004 0.004 0.004 }
+                physics Physics {
+                  mass 0.033584839
+                  centerOfMass [ 0.000286008963 -0.000972340766 -0.0537400702 ]
+                  inertiaMatrix [ 5.85819513e-05 5.84660052e-05 2.02312371e-06 7.14185794e-11 -2.54432306e-07 -1.70622338e-11 ]
+                }
+            }
+          }
+          ]
+          name "Link1_3"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.142665165
+            centerOfMass [ 0.000832959989 0.0271001337 0.0627224095 ]
+            inertiaMatrix [ 0.000110577409 9.47915673e-05 4.40205477e-05 -8.93246963e-07 6.65644733e-07 -8.92992626e-06 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 0.866024792 -0.50000106 0
+          anchor -0.017003 0.055845 0.25
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint3_1"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint3_1_sensor" }
+      ]
+      endPoint Solid {
+          translation -0.017003 0.055845 0.25
+          rotation -0.291615461 0.0781383185 -0.953338778 0.547991395
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link3_1.STL" ] }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+                axis 1 3.23108915e-15 0
+                anchor -0.014855 0.134327019 0
+                dampingConstant 0.1
+            }
+            device [
+                RotationalMotor {
+                  name "joint4_1"
+                  maxVelocity 3.0
+                  minPosition -3.14
+                  maxPosition 3.14
+                  maxTorque 30.0
+                  controlPID 20 4 0
+                }
+                PositionSensor { name "joint4_1_sensor" }
+            ]
+            endPoint Solid {
+                translation -0.014855 0.134327019 0
+                rotation -0 -0.0816874343 0.996657997 3.14159265
+                children [
+                Shape {
+                  appearance USE GRAY
+                  geometry Mesh { url [ "../meshes/Link4_1.STL" ] }
+                }
+                ]
+                name "Link4_1"
+                boundingObject Box { size 0.004 0.004 0.004 }
+                physics Physics {
+                  mass 1.39622251
+                  centerOfMass [ -0.0527694206 -0.0747170878 0.024242446 ]
+                  inertiaMatrix [ 0.00924411141 0.0101113335 0.00128966653 -1.47328854e-06 -8.80483984e-07 1.47484328e-06 ]
+                }
+            }
+          }
+          ]
+          name "Link3_1"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.0418799028
+            centerOfMass [ 0.042645 0.0669368341 -5.55111512e-17 ]
+            inertiaMatrix [ 5.2938455e-05 5.23577798e-06 5.74602812e-05 3.35791735e-21 -1.77809154e-22 3.17637355e-22 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 3.6732051e-06 -1 0
+          anchor -0.039959 0.042643 0.25
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint3_2"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint3_2_sensor" }
+      ]
+      endPoint Solid {
+          translation -0.039959 0.042643 0.25
+          rotation 0.362985396 0.362986729 0.858185433 1.72314233
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link3_2.STL" ] }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+                axis 1 0 0
+                anchor 0.014855 0 -0.134327019
+                dampingConstant 0.1
+            }
+            device [
+                RotationalMotor {
+                  name "joint4_2"
+                  maxVelocity 3.0
+                  minPosition -3.14
+                  maxPosition 3.14
+                  maxTorque 30.0
+                  controlPID 20 4 0
+                }
+                PositionSensor { name "joint4_2_sensor" }
+            ]
+            endPoint Solid {
+                translation 0.014855 0 -0.134327019
+                rotation -1 0 0 0.800301372
+                children [
+                Shape {
+                  appearance USE GRAY
+                  geometry Mesh { url [ "../meshes/Link4_2.STL" ] }
+                }
+                ]
+                name "Link4_2"
+                boundingObject Box { size 0.004 0.004 0.004 }
+                physics Physics {
+                  mass 1.3929639
+                  centerOfMass [ -0.0622416464 0.0745152422 0.0240820896 ]
+                  inertiaMatrix [ 0.00924400098 0.0101111803 0.00128951338 -1.47328853e-06 8.80484048e-07 -1.47484369e-06 ]
+                }
+            }
+          }
+          ]
+          name "Link3_2"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.0418799028
+            centerOfMass [ -0.042645 8.32667268e-17 -0.0669368341 ]
+            inertiaMatrix [ 5.2938455e-05 5.74602812e-05 5.23577798e-06 2.17034559e-21 -8.8642029e-22 -3.17637355e-21 ]
+          }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+          axis 0.866025404 0.5 0
+          anchor 0.0574238188 -0.0141661141 0.25
+          dampingConstant 0.1
+      }
+      device [
+          RotationalMotor {
+            name "joint3_3"
+            maxVelocity 3.0
+            minPosition -3.14
+            maxPosition 3.14
+            maxTorque 30.0
+            controlPID 20 4 0
+          }
+          PositionSensor { name "joint3_3_sensor" }
+      ]
+      endPoint Solid {
+          translation 0.0574238188 -0.0141661141 0.25
+          rotation -0.0223763951 0.0835098435 -0.996255692 2.6198665
+          children [
+          Shape {
+            appearance USE GRAY
+            geometry Mesh { url [ "../meshes/Link3_3.STL" ] }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+                axis 1 3.49148134e-15 0
+                anchor -0.014855 0.134327019 0
+                dampingConstant 0.1
+            }
+            device [
+                RotationalMotor {
+                  name "joint4_3"
+                  maxVelocity 3.0
+                  minPosition -3.14
+                  maxPosition 3.14
+                  maxTorque 30.0
+                  controlPID 20 4 0
+                }
+                PositionSensor { name "joint4_3_sensor" }
+            ]
+            endPoint Solid {
+                translation -0.014855 0.134327019 0
+                rotation 0.0832408611 -0.0832408611 0.993046785 1.57777377
+                children [
+                Shape {
+                  appearance USE GRAY
+                  geometry Mesh { url [ "../meshes/Link4_3.STL" ] }
+                }
+                ]
+                name "Link4_3"
+                boundingObject Box { size 0.004 0.004 0.004 }
+                physics Physics {
+                  mass 1.37317141
+                  centerOfMass [ 0.0737846571 -0.0527161918 0.0256181556 ]
+                  inertiaMatrix [ 0.0100819076 0.00924353293 0.00126028479 1.47022577e-06 -1.48246156e-06 -8.98732457e-07 ]
+                }
+            }
+          }
+          ]
+          name "Link3_3"
+          boundingObject Box { size 0.004 0.004 0.004 }
+          physics Physics {
+            mass 0.0418799028
+            centerOfMass [ 0.042645 0.0669368341 5.55111512e-17 ]
+            inertiaMatrix [ 5.2938455e-05 5.23577798e-06 5.74602812e-05 -7.47155517e-21 -1.99065187e-21 -2.69991752e-21 ]
+          }
+      }
+    }
+    DEF TRK_1_0 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_0 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_1 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_1 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_2 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_2 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_3 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_3 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_4 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_4 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_5 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_5 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_6 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_6 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_7 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_7 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_8 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_8 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_9 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_9 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_10 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_10 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_11 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_11 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_12 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_12 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_13 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_13 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_14 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_14 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_15 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_15 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_16 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_16 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_17 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_17 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_18 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_18 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_19 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_19 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_20 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_20 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_21 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_21 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_22 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_22 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_23 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_23 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_24 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_24 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_25 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_25 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_26 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_26 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_27 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_27 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_28 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_28 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_29 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_29 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_30 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_30 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_31 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_31 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_32 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_32 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_33 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_33 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_34 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_34 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_35 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_35 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_36 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_36 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_37 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_37 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_38 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_38 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_39 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_39 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_40 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_40 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_41 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_41 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_42 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_42 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_1_43 Pose {
+      translation 0.132058682 0.232685841 0.28516421
+      rotation 0.771949943 0.449495987 0.449495987 1.82678923
+      children [
+        DEF BLT_1_43 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182550594 0.11377475 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_0 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_0 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_1 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_1 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_2 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_2 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_3 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_3 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_4 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_4 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_5 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_5 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_6 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_6 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_7 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_7 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_8 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_8 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_9 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_9 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_10 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_10 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_11 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_11 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_12 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_12 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_13 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_13 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_14 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_14 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_15 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_15 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_16 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_16 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_17 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_17 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_18 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_18 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_19 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_19 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_20 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_20 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_21 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_21 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_22 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_22 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_23 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_23 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_24 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_24 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_25 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_25 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_26 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_26 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_27 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_27 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_28 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_28 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_29 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_29 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_30 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_30 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_31 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_31 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_32 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_32 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_33 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_33 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_34 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_34 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_35 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_35 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_36 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_36 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_37 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_37 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_38 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_38 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_39 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_39 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_40 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_40 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_41 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_41 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_42 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_42 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_2_43 Pose {
+      translation -0.267541074 -0.00199247561 0.284101883
+      rotation 0.00263299496 -0.70710433 -0.70710433 3.13632668
+      children [
+        DEF BLT_2_43 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182555554 0.113958913 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_0 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_0 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_1 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_1 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_2 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_2 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_3 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_3 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_4 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_4 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_5 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_5 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_6 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_6 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_7 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_7 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_8 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_8 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_9 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_9 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_10 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_10 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_11 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_11 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_12 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_12 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_13 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_13 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_14 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_14 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_15 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_15 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_16 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_16 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_17 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_17 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_18 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_18 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_19 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_19 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_20 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_20 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_21 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_21 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_22 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_22 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_23 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_23 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_24 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_24 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_25 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_25 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_26 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_26 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_27 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_27 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_28 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_28 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_29 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_29 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_30 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_30 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_31 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_31 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_32 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_32 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_33 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_33 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_34 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_34 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_35 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_35 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_36 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_36 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_37 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_37 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_38 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_38 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_39 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_39 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_40 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_40 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_41 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_41 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_42 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_42 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+    DEF TRK_3_43 Pose {
+      translation 0.135495609 -0.230701399 0.275968733
+      rotation 0.777256894 -0.444899832 -0.444899832 1.82015558
+      children [
+        DEF BLT_3_43 Pose {
+          children [
+            Shape {
+              appearance Appearance { material Material {
+                diffuseColor 0.792157 0.819608 0.933333 } }
+              geometry Box { size 0.004 0.0182561691 0.113740036 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "zhengti2"
+  boundingObject Box { size 0.004 0.004 0.004 }
+  physics Physics {
+    mass 0.621250345
+    centerOfMass [ -1.16057569e-06 2.45348931e-06 0.195938527 ]
+    inertiaMatrix [ 0.00851940289 0.00851946164 0.00234364501 6.15265596e-08 -5.79606142e-08 1.21740135e-07 ]
+  }
+  controller "pipe_climber"
+  supervisor TRUE
+}
