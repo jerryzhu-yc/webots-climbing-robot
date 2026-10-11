@@ -1,6 +1,6 @@
 #VRML_SIM R2025a utf8
 # 三足履带爬管机器人仿真世界 —— 用 Webots 打开本文件即可运行
-# 机器人: 三条履带腿像奔驰车标一样 120° 对称撑住钢管内壁, 从管底爬到管顶
+# 机器人: 三条履带腿沿周向 120° 均布, 三爪对称撑住钢管内壁, 从管底爬到管顶
 # 场景: Webots 官方山湖背景 + 拼花地板竞技场, 水管立在正中央
 # 注意: 机器人外壳模型在 ../meshes/ 文件夹里, 缺一个都会显示不全, 请勿移动
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
